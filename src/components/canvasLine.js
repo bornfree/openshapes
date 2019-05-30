@@ -13,7 +13,7 @@ class CanvasLine extends React.Component {
       }
 
     render(){
-        return <Line ref={node => this.konvaLine = node} points={this.props.line} stroke="black" tension="0.7" strokeWidth={this.props.brushSize}  />
+        return <Line ref={node => this.konvaLine = node} points={this.props.points} stroke="black" tension="0.7" strokeWidth={this.props.brushSize}  />
     }
 }
 

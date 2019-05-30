@@ -1,4 +1,4 @@
-import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE } from "./actionTypes";
+import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE } from "./actionTypes";
 import uuid from "uuid";
 
 export const addObject = objectName => ({
@@ -25,6 +25,14 @@ export const moveObject = (id, x, y) => ({
     id,
     x,
     y
+  }
+});
+
+export const drawLine = (points) => ({
+  type: DRAW_LINE,
+  payload: {
+    id: uuid.v4(),
+    points
   }
 });
 

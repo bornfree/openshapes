@@ -5,6 +5,7 @@ import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
+import {drawLine} from '../redux/actions'
 
 /*
 Surface
@@ -49,8 +50,7 @@ class Surface extends React.Component {
     this.state = {
       selectedShapeName: '',
       dimensionsSet: false,
-      images: [""],
-      lines: [],
+      currentLine: []
     };
     
     this.getCanvasHeight = this.getCanvasHeight.bind(this);
@@ -59,10 +59,6 @@ class Surface extends React.Component {
   
   handleMouseDown = () => {
     this._drawing = true;
-    // add line
-    this.setState({
-      lines: [...this.state.lines, []]
-    });
   };
 
   handleMouseMove = e => {
@@ -72,21 +68,19 @@ class Surface extends React.Component {
     }
     const stage = this.stageRef.getStage();
     const point = stage.getPointerPosition();
-    const { lines } = this.state;
+    
+   this.setState({
+    currentLine: this.state.currentLine.concat([point.x, point.y])
+   });
 
-    let lastLine = lines[lines.length - 1];
-    // add point
-    lastLine = lastLine.concat([point.x, point.y]);
-
-    // replace last
-    lines.splice(lines.length - 1, 1, lastLine);
-    this.setState({
-      lines: lines.concat()
-    });
   };
 
   handleMouseUp = () => {
     this._drawing = false;
+    this.props.drawLine(this.state.currentLine);
+    this.setState({
+      currentLine: []
+    });
   };
 
   handleStageClick = e => {
@@ -107,10 +101,11 @@ class Surface extends React.Component {
     this.setState({
       dimensionsSet: true
     });
+    
   }
   
   render(){
-    	
+      
         return(
             <div id="surface" className="top-margin-20" ref={node => this.surface = node}>
             <Stage width={this.getCanvasWidth()} height={this.getCanvasHeight()} 
@@ -125,12 +120,14 @@ class Surface extends React.Component {
               <Provider store={store}>
                 <Layer>
 
+                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} />
+
                   {this.props.items.map((item, i) => 
 
                     item.itemType === "object"?
                     
                       <CanvasImage key={item.id} {...item} /> :
-                      <CanvasLine key={item.id} points={item} />
+                      <CanvasLine key={item.id} {...item} />
                     
                   )}
 
@@ -154,5 +151,5 @@ function mapStateToProps(state){
 
 export default connect(
   mapStateToProps,
-  null
+  {drawLine}
 )(Surface)

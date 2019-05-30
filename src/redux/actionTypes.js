@@ -3,6 +3,8 @@ export const DELETE_OBJECT = "DELETE_OBJECT";
 export const MOVE_OBJECT = "MOVE_OBJECT";
 export const TRANSFORM_OBJECT = "TRANSFORM_OBJECT";
 
+export const DRAW_LINE = "DRAW_LINE";
+
 export const CREATE_DRAWING = "CREATE_DRAWING";
 export const UNDO = "UNDO";
 export const REDO = "REDO";

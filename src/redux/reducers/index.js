@@ -1,4 +1,4 @@
-import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE, DRAW_LINE } from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,
@@ -14,7 +14,7 @@ function rootReducer(state= initialState, action) {
   switch(action.type){
     
     case ADD_OBJECT:
-      const item = {
+      const objectItem = {
         itemType: "object",
         id: action.payload.id,
         src: action.payload.url,
@@ -26,7 +26,7 @@ function rootReducer(state= initialState, action) {
       }
       return {
         ...state,
-        canvasItems: [...state.canvasItems, item]
+        canvasItems: [...state.canvasItems, objectItem]
       }
 
     case MOVE_OBJECT:
@@ -70,6 +70,19 @@ function rootReducer(state= initialState, action) {
       return {
         ...state,
         canvasItems
+      }
+    
+    case DRAW_LINE:
+      const lineItem = {
+        itemType: "line",
+        id: action.payload.id,
+        points: action.payload.points,
+        brushSize: state.brushSize
+      }
+
+      return {
+        ...state,
+        canvasItems: [...state.canvasItems, lineItem]
       }
     
     case CREATE_DRAWING:

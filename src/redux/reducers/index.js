@@ -2,7 +2,8 @@ import { ADD_OBJECT, CREATE_DRAWING } from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,
-  canvasImages: []
+  canvasImages: [],
+  brushSize: 20
 };
 
 function rootReducer(state= initialState, action) {

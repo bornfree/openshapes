@@ -3,6 +3,7 @@ import items from '../coco.json';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Objects from './objects';
+import {connect} from 'react-redux';
 
 /*
 Toolset
@@ -12,7 +13,7 @@ var nonThings = items.filter((item) =>
     {return item.isthing !== 1;}
 );
 
-export default class Toolset extends React.Component {
+class Toolset extends React.Component {
 
     getBrushStyle(i){
         return {
@@ -60,3 +61,8 @@ export default class Toolset extends React.Component {
         );
     }
 }
+
+export default connect(
+    null,
+    null
+)(Toolset)

@@ -1,4 +1,4 @@
-import { ADD_OBJECT, CREATE_DRAWING } from "./actionTypes";
+import { ADD_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE } from "./actionTypes";
 const path = require('path');
 
 export const addObject = objectName => ({

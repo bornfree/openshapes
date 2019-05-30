@@ -40,6 +40,7 @@ class Handler extends React.Component {
 
 function mapStateToProps(state){
   return {
+    brushSize: state.brushSize,
     images: state.canvasImages
   }
 }
@@ -130,7 +131,7 @@ class Surface extends React.Component {
                   <CanvasImage key={imageUrl} url={imageUrl}/>  
                 )}
                 {this.state.lines.map((line, i) => (
-                  <Line key={i} points={line} stroke="black" strokeWidth="10" />
+                  <Line key={i} points={line} stroke="black" strokeWidth={this.props.brushSize} />
                 ))}
                 
                 <Handler selectedShapeName={this.state.selectedShapeName} />

@@ -2,14 +2,11 @@ import React from 'react';
 import items from '../coco.json';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
+import Objects from './objects';
 
 /*
 Toolset
 */
-
-var things = items.filter((item) =>
-    {return item.isthing === 1;}
-);
 
 var nonThings = items.filter((item) =>
     {return item.isthing !== 1;}
@@ -23,7 +20,7 @@ export default class Toolset extends React.Component {
             width: i +"px"
         }
     }
-    
+
     render(){
         
         return(
@@ -41,13 +38,13 @@ export default class Toolset extends React.Component {
                             <div id="brushSizes">
                                 <p>Brush Size</p>
                                 {[10, 20, 40, 60, 80].map((i) => 
-                                <div className="brushSize" style={this.getBrushStyle(i)}/>
+                                <div key={i} className="brushSize" style={this.getBrushStyle(i)}/>
                                 )}
                             </div>
                             
                         
                             {nonThings.map((item) =>
-                            <button className="btn btn-hollow btn-sm item-button">
+                            <button key={item.name} className="btn btn-hollow btn-sm item-button">
                                 {item.name}
                             </button>    
                             )}
@@ -55,13 +52,7 @@ export default class Toolset extends React.Component {
                     </TabPanel>
 
                     <TabPanel>
-                        <div id="objects">
-                            {things.map((item) =>
-                            <button className="btn btn-hollow btn-sm item-button">
-                                {item.name}
-                            </button>    
-                            )}
-                        </div>
+                        <Objects/>
                     </TabPanel>
                 </Tabs>
 

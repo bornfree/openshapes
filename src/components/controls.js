@@ -1,17 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createDrawing } from '../redux/actions';
 
 /*
 Controls
 */
 
-export default class Controls extends React.Component {
+function mapStateToProps(state){
+    return state;
+}
+
+class Controls extends React.Component {
 
     render(){
         return(
             <div id="controls">
                 <div className="row">
                     <div className="col text-center top-margin-20 bottom-margin-20">
-                        <button className="btn btn-warning top-margin-20">
+                        <button className="btn btn-warning top-margin-20" onClick={() => this.props.createDrawing()} disabled={this.props.drawingInProgress}>
                             <b>Create</b>
                         </button>
                     </div>
@@ -42,3 +48,8 @@ export default class Controls extends React.Component {
     }
 
 }
+
+export default connect(
+    mapStateToProps,
+    {createDrawing}
+  )(Controls)

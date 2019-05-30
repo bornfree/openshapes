@@ -12,7 +12,7 @@ export default class Results extends React.Component {
                 <p><b>Drawings</b></p>
                 <div className="row">
                 {[1,2,3,4,5].map((i) => 
-                    <div className="col-md-2">
+                    <div key={i} className="col-md-2">
                         <div className="result">
                         </div>
                     </div>

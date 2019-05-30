@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer, Transformer, Line } from 'react-konva';
+import { Stage, Layer, Transformer } from 'react-konva';
 import CanvasImage from './canvasImage';
 import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
@@ -128,7 +128,7 @@ class Surface extends React.Component {
               <Provider store={store}>
                 <Layer>
 
-                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} />
+                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} brushColor={this.props.brushColor}/>
 
                   {this.props.items.map((item, i) => 
 
@@ -154,7 +154,8 @@ function mapStateToProps(state){
   return {
     items: state.canvasItems,
     brushSize: state.brushSize,
-    disableLineDrawing: (state.drawingMode === "object")
+    disableLineDrawing: (state.drawingMode === "object"),
+    brushColor: state.brushColor
   }
 }
 

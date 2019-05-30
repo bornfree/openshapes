@@ -52,7 +52,7 @@ class Toolset extends React.Component {
                             
                         
                             {nonThings.map((item) =>
-                            <button key={item.name} className={this.getButtonStyle(item.name)} onClick={() => this.props.selectBackground(item.name)} >
+                            <button key={item.name} className={this.getButtonStyle(item.name)} onClick={() => this.props.selectBackground(item.name, item.color)} >
                                 {item.name}
                             </button>    
                             )}

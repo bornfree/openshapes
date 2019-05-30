@@ -1,7 +1,10 @@
 import React from 'react';
 import { Stage, Layer, Transformer, Line } from 'react-konva';
 import CanvasImage from './canvasImage';
+import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 
 /*
 Surface
@@ -32,16 +35,10 @@ class Handler extends React.Component {
       <Transformer
         ref={node => {
           this.transformer = node;
-        }}
+        }
+      }
       />
     );
-  }
-}
-
-function mapStateToProps(state){
-  return {
-    brushSize: state.brushSize,
-    images: state.canvasImages
   }
 }
 
@@ -128,11 +125,15 @@ class Surface extends React.Component {
               <Layer>
 
                 {this.props.images.map((imageUrl) => 
-                  <CanvasImage key={imageUrl} url={imageUrl}/>  
+                  <Provider store={store}>
+                    <CanvasImage key={imageUrl} url={imageUrl}/>  
+                  </Provider>
                 )}
-                {this.state.lines.map((line, i) => (
-                  <Line key={i} points={line} stroke="black" strokeWidth={this.props.brushSize} />
-                ))}
+                {this.props.lines.map((line, i) => 
+                  <Provider store={store}>
+                    <CanvasLine key={i} line={line}/>
+                  </Provider>
+                )}
                 
                 <Handler selectedShapeName={this.state.selectedShapeName} />
               </Layer>
@@ -141,6 +142,14 @@ class Surface extends React.Component {
         );
   }
 
+}
+
+function mapStateToProps(state){
+  return {
+    brushSize: state.brushSize,
+    images: state.canvasImages,
+    lines: state.canvasLines
+  }
 }
 
 export default connect(

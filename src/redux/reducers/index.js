@@ -1,9 +1,9 @@
-import { ADD_OBJECT, CREATE_DRAWING } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE } from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,
   canvasImages: [],
-  brushSize: 20
+  brushSize: 5
 };
 
 function rootReducer(state= initialState, action) {
@@ -25,6 +25,12 @@ function rootReducer(state= initialState, action) {
         drawingInProgress: true
       }
 
+    case CHANGE_BRUSH_SIZE:
+      const {brushSize} = action.payload;
+      return {
+        ...state,
+        brushSize
+      }
 
     default: 
       return state;

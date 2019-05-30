@@ -5,6 +5,9 @@ export const TRANSFORM_OBJECT = "TRANSFORM_OBJECT";
 
 export const DRAW_LINE = "DRAW_LINE";
 
+export const SELECT_BACKGROUND = "SELECT_BACKGROUND";
+
+export const CHANGE_DRAWING_MODE = "CHANGE_DRAWING_MODE";
 export const CREATE_DRAWING = "CREATE_DRAWING";
 export const UNDO = "UNDO";
 export const REDO = "REDO";

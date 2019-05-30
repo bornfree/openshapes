@@ -1,4 +1,4 @@
-import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE } from "./actionTypes";
+import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CLEAR_DRAWING, CHANGE_DRAWING_MODE } from "./actionTypes";
 import uuid from "uuid";
 
 export const addObject = objectName => ({
@@ -36,8 +36,30 @@ export const drawLine = (points) => ({
   }
 });
 
+export const selectBackground = (itemName) => ({
+  type: SELECT_BACKGROUND,
+  payload: {
+    itemName
+  }
+});
+
 export const createDrawing = () => ({
   type: CREATE_DRAWING
+});
+
+export const downloadDrawing = () => ({
+  type: DOWNLOAD_DRAWING
+});
+
+export const clearDrawing = () => ({
+  type: CLEAR_DRAWING
+});
+
+export const changeDrawingMode = (drawingMode) => ({
+  type: CHANGE_DRAWING_MODE,
+  payload: {
+    drawingMode
+  }
 });
 
 export const changeBrushSize = (brushSize) => ({

@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Objects from './objects';
 import {connect} from 'react-redux';
-import {changeBrushSize} from '../redux/actions';
+import {changeBrushSize, selectBackground, changeDrawingMode} from '../redux/actions';
 
 /*
 Toolset
@@ -17,10 +17,16 @@ var nonThings = items.filter((item) =>
 class Toolset extends React.Component {
 
     getBrushStyle(i){
+        var borderWidth = this.props.brushSize === i? "4px": "0px"
         return {
             height: i +"px",
-            width: i +"px"
+            width: i +"px",
+            borderWidth
         }
+    }
+
+    getButtonStyle(name){
+        return this.props.selectedBackground === name? "btn btn-danger btn-sm item-button": "btn btn-hollow btn-sm item-button"
     }
 
     render(){
@@ -31,8 +37,8 @@ class Toolset extends React.Component {
 
                 <Tabs>
                     <TabList>
-                    <Tab><b>Backgrounds</b></Tab>
-                    <Tab><b>Objects</b></Tab>
+                    <Tab onClick={() => this.props.changeDrawingMode("background")}><b>Backgrounds</b></Tab>
+                    <Tab onClick={() => this.props.changeDrawingMode("object")}><b>Objects</b></Tab>
                     </TabList>
 
                     <TabPanel>
@@ -46,7 +52,7 @@ class Toolset extends React.Component {
                             
                         
                             {nonThings.map((item) =>
-                            <button key={item.name} className="btn btn-hollow btn-sm item-button">
+                            <button key={item.name} className={this.getButtonStyle(item.name)} onClick={() => this.props.selectBackground(item.name)} >
                                 {item.name}
                             </button>    
                             )}
@@ -63,7 +69,14 @@ class Toolset extends React.Component {
     }
 }
 
+function mapStateToProps(state){
+    return {
+        selectedBackground: state.selectedBackground,
+        brushSize: state.brushSize
+    }
+}
+
 export default connect(
-    null,
-    {changeBrushSize}
+    mapStateToProps,
+    {changeBrushSize, selectBackground, changeDrawingMode}
 )(Toolset)

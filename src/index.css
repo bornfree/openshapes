@@ -107,4 +107,6 @@ code {
   background: rgb(27, 26, 22);
   -webkit-border-radius: 50%;
   border-radius: 50%;
+  border-color: #dc3545;
+  border-style: solid;
 }

@@ -1,9 +1,11 @@
-import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE, DRAW_LINE } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CLEAR_DRAWING, CHANGE_DRAWING_MODE } from "../actionTypes";
+import { CLEAR } from "jest-util/build/specialChars";
 
 const initialState = {
   drawingInProgress: false,
-  selectedItem: "road",
-  brushSize: 5,
+  selectedBackground: "road",
+  brushSize: 40,
+  drawingMode: "background",
   canvasItems: []
 };
 
@@ -85,6 +87,13 @@ function rootReducer(state= initialState, action) {
         canvasItems: [...state.canvasItems, lineItem]
       }
     
+    case SELECT_BACKGROUND:
+      const {itemName} = action.payload;
+      return {
+        ...state,
+        selectedBackground: itemName
+      }
+    
     case CREATE_DRAWING:
       return {
         ...state,
@@ -96,6 +105,22 @@ function rootReducer(state= initialState, action) {
       return {
         ...state,
         brushSize
+      }
+    
+    case DOWNLOAD_DRAWING:
+      return state;
+    
+    case CLEAR_DRAWING:
+      return {
+        ...state,
+        canvasItems : []
+      }
+
+    case CHANGE_DRAWING_MODE:
+      const {drawingMode} = action.payload;
+      return {
+        ...state,
+        drawingMode
       }
 
     default: 

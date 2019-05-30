@@ -1,7 +1,8 @@
 import { ADD_OBJECT, CREATE_DRAWING } from "../actionTypes";
 
 const initialState = {
-  drawingInProgress: false
+  drawingInProgress: false,
+  canvasImages: []
 };
 
 function rootReducer(state= initialState, action) {
@@ -11,8 +12,10 @@ function rootReducer(state= initialState, action) {
   switch(action.type){
     
     case ADD_OBJECT:
+      const {url} = action.payload;
       return {
-        ...state
+        ...state,
+        canvasImages: [...state.canvasImages, url]
       }
     
     case CREATE_DRAWING:

@@ -1,63 +1,11 @@
 import React from 'react';
-import { Stage, Layer, Image, Transformer } from 'react-konva';
+import { Stage, Layer, Transformer } from 'react-konva';
+import CanvasImage from './canvasImage';
+import { connect } from 'react-redux';
+
 /*
 Surface
 */
-
-// VERY IMPORTANT NOTES
-// at first we will set image state to null
-// and then we will set it to native image instanse
-// only when image is loaded
-class Image1 extends React.Component {
-  state = {
-    image: null
-  };
-  componentDidMount() {
-    const image = new window.Image();
-    image.src = "http://konvajs.github.io/assets/yoda.jpg";
-    image.onload = () => {
-      // setState will redraw layer
-      // because "image" property is changed
-      this.setState({
-        image: image
-      });
-    };
-  }
-
-  render() {
-    return <Image name="yoda" draggable image={this.state.image} />;
-  }
-}
-
-// here is another way to update the image
-class Image2 extends React.Component {
-  state = {
-    image: new window.Image()
-  };
-  componentDidMount() {
-    this.state.image.src = "http://konvajs.github.io/assets/darth-vader.jpg";
-    this.state.image.onload = () => {
-      // calling set state here will do nothing
-      // because properties of Konva.Image are not changed
-      // so we need to update layer manually
-      this.imageNode.getLayer().batchDraw();
-    };
-  }
-
-  render() {
-    return (
-      <Image
-        image={this.state.image}
-        y={250}
-        name="vader"
-        ref={node => {
-          this.imageNode = node;
-        }}
-        draggable
-      />
-    );
-  }
-}
 
 class Handler extends React.Component {
   componentDidMount() {
@@ -90,33 +38,67 @@ class Handler extends React.Component {
   }
 }
 
+function mapStateToProps(state){
+  return {
+    images: state.canvasImages
+  }
+}
 
-export default class Surface extends React.Component {
+class Surface extends React.Component {
 
-
-
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedShapeName: '',
+      dimensionsSet: false,
+      images: ["http://konvajs.github.io/assets/darth-vader.jpg"]
+    };
+    
+    this.getCanvasHeight = this.getCanvasHeight.bind(this);
+    this.getCanvasWidth = this.getCanvasWidth.bind(this);
+  }
 	
-	state = {
-	    selectedShapeName: ''
-	  };
-	  selectedShapeName
-	  handleStageClick = e => {
-	    this.setState({
-	      selectedShapeName: e.target.name()
-	    });
-	  };
-    render(){
+  handleStageClick = e => {
+    this.setState({
+      selectedShapeName: e.target.name()
+    });
+  };
+
+  getCanvasWidth(){
+    return this.state.dimensionsSet? this.surface.clientWidth : 10;
+  }
+
+  getCanvasHeight(){
+    return this.state.dimensionsSet? this.surface.clientHeight : 10;
+  }
+
+  componentDidMount(){
+    this.setState({
+      dimensionsSet: true
+    });
+  }
+  
+  render(){
     	
         return(
-            <div id="surface" className="top-margin-20">
-            <Stage width={1000} height={600} onClick={this.handleStageClick}>
-        <Layer>
-          <Image1 />
-          <Image2 /> 
-          <Handler selectedShapeName={this.state.selectedShapeName} />
-        </Layer>
-      </Stage>
+            <div id="surface" className="top-margin-20" ref={node => this.surface = node}>
+            <Stage width={this.getCanvasWidth()} height={this.getCanvasHeight()} onClick={this.handleStageClick}>
+              <Layer>
+
+                {this.props.images.map((imageUrl) => 
+                  <CanvasImage key={imageUrl} url={imageUrl}/>  
+                )}
+                
+                <Handler selectedShapeName={this.state.selectedShapeName} />
+              </Layer>
+            </Stage>
             </div>
         );
-    }
+  }
+
 }
+
+export default connect(
+  mapStateToProps,
+  null
+)(Surface)

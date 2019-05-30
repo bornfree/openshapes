@@ -4,7 +4,7 @@ const path = require('path');
 export const addObject = objectName => ({
     type: ADD_OBJECT,
     payload: {
-      url: path.join("src", "images", objectName + ".svg")
+      url: "http://localhost:5000/" +  objectName + ".svg"
     }
   });
 

@@ -14,7 +14,7 @@ class CanvasImage extends React.Component {
 
   componentDidMount() {
     const image = new window.Image();
-    image.src = this.props.url;
+    image.src = this.props.src;
     image.onload = () => {
       // setState will redraw layer
       // because "image" property is changed
@@ -25,15 +25,23 @@ class CanvasImage extends React.Component {
   }
 
   handleTransformEnd(){
-    this.props.transformObject(this.konvaImage.name(), this.konvaImage.rotation(), this.konvaImage.scaleX(), this.konvaImage.scaleY());
+    this.props.transformObject(this.props.id, this.konvaImage.rotation(), this.konvaImage.scaleX(), this.konvaImage.scaleY());
   }
 
   handleDragEnd(){
-    this.props.moveObject(this.konvaImage.name(), this.konvaImage.x(), this.konvaImage.y());
+    this.props.moveObject(this.props.id, this.konvaImage.x(), this.konvaImage.y());
   }
 
   render() {
-    return <Image ref={node => this.konvaImage = node} onTransformEnd={() => this.handleTransformEnd()} onDragEnd={() =>this.handleDragEnd()} name={this.props.url} draggable image={this.state.image} />;
+    return (
+      <Image 
+        ref={node => this.konvaImage = node} 
+        image={this.state.image}
+        onTransformEnd={() => this.handleTransformEnd()} 
+        onDragEnd={() =>this.handleDragEnd()} 
+        name={this.props.id} 
+        draggable />
+      );
   }
 }
 

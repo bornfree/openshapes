@@ -41,12 +41,6 @@ class Handler extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-  return {
-    images: state.canvasImages
-  }
-}
-
 class Surface extends React.Component {
 
   constructor(props){
@@ -127,24 +121,33 @@ class Surface extends React.Component {
                 this.stageRef = node;
               }}
               >
-              <Layer>
+              <Provider store={store}>
+                <Layer>
 
-                {this.props.images.map((imageUrl) => 
-                  <Provider store={store}>
-                    <CanvasImage key={imageUrl} url={imageUrl}/>  
-                  </Provider>
-                )}
-                {this.state.lines.map((line, i) => (
-                  <Line key={i} points={line} stroke="black" strokeWidth="10" />
-                ))}
-                
-                <Handler selectedShapeName={this.state.selectedShapeName} />
-              </Layer>
+                  {this.props.items.map((item, i) => 
+
+                    item.itemType === "object"?
+                    
+                      <CanvasImage key={item.id} {...item} /> :
+                      <Line key={item.id} points={item} stroke="black" strokeWidth="10" />
+                    
+                  )}
+
+                  <Handler selectedShapeName={this.state.selectedShapeName} />
+                </Layer>
+              </Provider>
             </Stage>
             </div>
         );
   }
 
+}
+
+function mapStateToProps(state){
+  console.log("state", state);
+  return {
+    items: state.canvasItems
+  }
 }
 
 export default connect(

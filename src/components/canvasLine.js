@@ -1,19 +1,17 @@
 import React from 'react';
 import { Line } from 'react-konva';
-import { connect } from 'react-redux';
-import { transformObject, moveObject } from '../redux/actions';
-class CanvasLine extends React.Component {
+
+export default class CanvasLine extends React.Component {
     constructor(props){
         super(props);
         
     }
 
-    handleDrawEnd(){
-        this.props.moveObject(this.konvaImage.name(), this.konvaImage.x(), this.konvaImage.y());
-      }
-
+    rgbToString(rgb){
+        return `rgba(${rgb[0]},${rgb[1]},${rgb[2]})`
+    }
     render(){
-        return <Line ref={node => this.konvaLine = node} points={this.props.points} stroke="black" tension="0.7" strokeWidth={this.props.brushSize}  />
+        return <Line ref={node => this.konvaLine = node} points={this.props.points} stroke={this.rgbToString(this.props.brushColor)} tension={.7} strokeWidth={this.props.brushSize}  />
     }
 }
 
@@ -23,7 +21,4 @@ function mapStateToProps(state){
     }
   }
   
-  export default connect(
-    mapStateToProps,
-    null
-  )(CanvasLine)
+  

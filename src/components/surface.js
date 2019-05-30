@@ -120,7 +120,7 @@ class Surface extends React.Component {
               <Provider store={store}>
                 <Layer>
 
-                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} />
+                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} brushColor={this.props.brushColor}/>
 
                   {this.props.items.map((item, i) => 
 
@@ -146,6 +146,7 @@ function mapStateToProps(state){
   return {
     items: state.canvasItems,
     brushSize: state.brushSize,
+    brushColor: state.brushColor
   }
 }
 

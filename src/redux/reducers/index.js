@@ -1,9 +1,10 @@
-import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE, DRAW_LINE } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING, CHANGE_BRUSH_SIZE, CHANGE_BRUSH_COLOR, DRAW_LINE } from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,
   selectedItem: "road",
   brushSize: 5,
+  brushColor: [0,0,0],
   canvasItems: []
 };
 
@@ -77,7 +78,8 @@ function rootReducer(state= initialState, action) {
         itemType: "line",
         id: action.payload.id,
         points: action.payload.points,
-        brushSize: state.brushSize
+        brushSize: state.brushSize,
+        brushColor: state.brushColor
       }
 
       return {
@@ -97,6 +99,13 @@ function rootReducer(state= initialState, action) {
         ...state,
         brushSize
       }
+
+    case CHANGE_BRUSH_COLOR:
+        const {brushColor} = action.payload;
+        return {
+          ...state,
+          brushColor
+        }
 
     default: 
       return state;

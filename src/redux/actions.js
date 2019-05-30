@@ -1,4 +1,4 @@
-import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE } from "./actionTypes";
+import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, CHANGE_BRUSH_COLOR, DRAW_LINE } from "./actionTypes";
 import uuid from "uuid";
 
 export const addObject = objectName => ({
@@ -44,5 +44,12 @@ export const changeBrushSize = (brushSize) => ({
   type: CHANGE_BRUSH_SIZE,
   payload: {
     brushSize
+  }
+});
+
+export const changeBrushColor = (brushColor) => ({
+  type: CHANGE_BRUSH_COLOR,
+  payload: {
+    brushColor
   }
 });

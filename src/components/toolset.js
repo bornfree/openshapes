@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Objects from './objects';
 import {connect} from 'react-redux';
-import {changeBrushSize} from '../redux/actions';
+import {changeBrushSize, changeBrushColor} from '../redux/actions';
 
 /*
 Toolset
@@ -46,7 +46,7 @@ class Toolset extends React.Component {
                             
                         
                             {nonThings.map((item) =>
-                            <button key={item.name} className="btn btn-hollow btn-sm item-button">
+                            <button key={item.name} className="btn btn-hollow btn-sm item-button" onClick={() => this.props.changeBrushColor(item.color)}>
                                 {item.name}
                             </button>    
                             )}
@@ -65,5 +65,5 @@ class Toolset extends React.Component {
 
 export default connect(
     null,
-    {changeBrushSize}
+    {changeBrushSize, changeBrushColor}
 )(Toolset)

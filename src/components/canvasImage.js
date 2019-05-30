@@ -1,13 +1,18 @@
 import React from 'react';
 import { Image } from 'react-konva';
+import { connect } from 'react-redux';
+import { transformObject, moveObject } from '../redux/actions';
 
-export default class CanvasImage extends React.Component {
-  state = {
-    image: null
-  };
+class CanvasImage extends React.Component {
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      image: null
+    };  
+  }
 
   componentDidMount() {
-    console.log(this.props.url);
     const image = new window.Image();
     image.src = this.props.url;
     image.onload = () => {
@@ -19,7 +24,26 @@ export default class CanvasImage extends React.Component {
     };
   }
 
+  handleTransformEnd(){
+    this.props.transformObject(this.konvaImage.name(), this.konvaImage.rotation(), this.konvaImage.scaleX(), this.konvaImage.scaleY());
+  }
+
+  handleDragEnd(){
+    this.props.moveObject(this.konvaImage.name(), this.konvaImage.x(), this.konvaImage.y());
+  }
+
   render() {
-    return <Image name={this.props.url} draggable image={this.state.image} />;
+    return <Image ref={node => this.konvaImage = node} onTransformEnd={() => this.handleTransformEnd()} onDragEnd={() =>this.handleDragEnd()} name={this.props.url} draggable image={this.state.image} />;
   }
 }
+
+function mapStateToProps(state){
+  return {
+    state
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  {transformObject, moveObject}
+)(CanvasImage)

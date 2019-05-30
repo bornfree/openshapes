@@ -1,4 +1,4 @@
-import { ADD_OBJECT, CREATE_DRAWING } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, CREATE_DRAWING } from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,

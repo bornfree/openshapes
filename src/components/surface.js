@@ -1,7 +1,9 @@
 import React from 'react';
 import { Stage, Layer, Transformer } from 'react-konva';
-import CanvasImage from './canvasImage';
 import { connect } from 'react-redux';
+import CanvasImage from './canvasImage';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 
 /*
 Surface
@@ -32,7 +34,8 @@ class Handler extends React.Component {
       <Transformer
         ref={node => {
           this.transformer = node;
-        }}
+        }
+      }
       />
     );
   }
@@ -50,14 +53,13 @@ class Surface extends React.Component {
     super(props);
     this.state = {
       selectedShapeName: '',
-      dimensionsSet: false,
-      images: ["http://konvajs.github.io/assets/darth-vader.jpg"]
+      dimensionsSet: false
     };
     
     this.getCanvasHeight = this.getCanvasHeight.bind(this);
     this.getCanvasWidth = this.getCanvasWidth.bind(this);
   }
-	
+
   handleStageClick = e => {
     this.setState({
       selectedShapeName: e.target.name()
@@ -86,7 +88,9 @@ class Surface extends React.Component {
               <Layer>
 
                 {this.props.images.map((imageUrl) => 
-                  <CanvasImage key={imageUrl} url={imageUrl}/>  
+                  <Provider store={store}>
+                    <CanvasImage key={imageUrl} url={imageUrl}/>  
+                  </Provider>
                 )}
                 
                 <Handler selectedShapeName={this.state.selectedShapeName} />

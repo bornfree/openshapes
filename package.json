@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "konva": "^3.3.0",
     "rc-slider": "^8.6.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-konva": "^16.8.7-2",
     "react-scripts": "3.0.1",
-    "react-tabs": "^3.0.0"
+    "react-tabs": "^3.0.0",
+    "use-image": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

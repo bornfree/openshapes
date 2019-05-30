@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer, Transformer } from 'react-konva';
+import { Stage, Layer, Transformer, Line } from 'react-konva';
 import CanvasImage from './canvasImage';
 import { connect } from 'react-redux';
 
@@ -51,13 +51,46 @@ class Surface extends React.Component {
     this.state = {
       selectedShapeName: '',
       dimensionsSet: false,
-      images: ["http://konvajs.github.io/assets/darth-vader.jpg"]
+      images: [""],
+      lines: [],
     };
     
     this.getCanvasHeight = this.getCanvasHeight.bind(this);
     this.getCanvasWidth = this.getCanvasWidth.bind(this);
   }
-	
+  
+  handleMouseDown = () => {
+    this._drawing = true;
+    // add line
+    this.setState({
+      lines: [...this.state.lines, []]
+    });
+  };
+
+  handleMouseMove = e => {
+    // no drawing - skipping
+    if (!this._drawing) {
+      return;
+    }
+    const stage = this.stageRef.getStage();
+    const point = stage.getPointerPosition();
+    const { lines } = this.state;
+
+    let lastLine = lines[lines.length - 1];
+    // add point
+    lastLine = lastLine.concat([point.x, point.y]);
+
+    // replace last
+    lines.splice(lines.length - 1, 1, lastLine);
+    this.setState({
+      lines: lines.concat()
+    });
+  };
+
+  handleMouseUp = () => {
+    this._drawing = false;
+  };
+
   handleStageClick = e => {
     this.setState({
       selectedShapeName: e.target.name()
@@ -82,12 +115,23 @@ class Surface extends React.Component {
     	
         return(
             <div id="surface" className="top-margin-20" ref={node => this.surface = node}>
-            <Stage width={this.getCanvasWidth()} height={this.getCanvasHeight()} onClick={this.handleStageClick}>
+            <Stage width={this.getCanvasWidth()} height={this.getCanvasHeight()} 
+              onClick={this.handleStageClick}
+              onContentMousedown={this.handleMouseDown}
+              onContentMousemove={this.handleMouseMove}
+              onContentMouseup={this.handleMouseUp}
+              ref={node => {
+                this.stageRef = node;
+              }}
+              >
               <Layer>
 
                 {this.props.images.map((imageUrl) => 
                   <CanvasImage key={imageUrl} url={imageUrl}/>  
                 )}
+                {this.state.lines.map((line, i) => (
+                  <Line key={i} points={line} stroke="black" strokeWidth="10" />
+                ))}
                 
                 <Handler selectedShapeName={this.state.selectedShapeName} />
               </Layer>

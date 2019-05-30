@@ -20,6 +20,6 @@ export default class CanvasImage extends React.Component {
   }
 
   render() {
-    return <Image name={this.props.url} draggable image={this.state.image} />;
+    return <Image name={this.props.url} draggable image={this.state.image} scaleX="2" scaleY="2" rotation="30" />;
   }
 }

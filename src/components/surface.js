@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stage, Layer, Transformer, Line } from 'react-konva';
 import CanvasImage from './canvasImage';
+import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
@@ -129,7 +130,7 @@ class Surface extends React.Component {
                     item.itemType === "object"?
                     
                       <CanvasImage key={item.id} {...item} /> :
-                      <Line key={item.id} points={item} stroke="black" strokeWidth="10" />
+                      <CanvasLine key={item.id} points={item} />
                     
                   )}
 
@@ -146,7 +147,8 @@ class Surface extends React.Component {
 function mapStateToProps(state){
   console.log("state", state);
   return {
-    items: state.canvasItems
+    items: state.canvasItems,
+    brushSize: state.brushSize,
   }
 }
 

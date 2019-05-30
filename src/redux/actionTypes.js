@@ -9,3 +9,4 @@ export const REDO = "REDO";
 export const DOWNLOAD_DRAWING = "DOWNLOAD_DRAWING";
 export const CLEAR_DRAWING = "CLEAR_DRAWING";
 
+export const CHANGE_BRUSH_SIZE = "CHANGE_BRUSH_SIZE";

@@ -3,6 +3,8 @@ import items from '../coco.json';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import Objects from './objects';
+import {connect} from 'react-redux';
+import {changeBrushSize} from '../redux/actions';
 
 /*
 Toolset
@@ -12,7 +14,7 @@ var nonThings = items.filter((item) =>
     {return item.isthing !== 1;}
 );
 
-export default class Toolset extends React.Component {
+class Toolset extends React.Component {
 
     getBrushStyle(i){
         return {
@@ -38,7 +40,7 @@ export default class Toolset extends React.Component {
                             <div id="brushSizes">
                                 <p>Brush Size</p>
                                 {[10, 20, 40, 60, 80].map((i) => 
-                                <div key={i} className="brushSize" style={this.getBrushStyle(i)}/>
+                                <div key={i} className="brushSize" style={this.getBrushStyle(i)} onClick={() => this.props.changeBrushSize(i)}/>
                                 )}
                             </div>
                             
@@ -60,3 +62,8 @@ export default class Toolset extends React.Component {
         );
     }
 }
+
+export default connect(
+    null,
+    {changeBrushSize}
+)(Toolset)

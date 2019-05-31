@@ -5,7 +5,7 @@ import undoable from 'redux-undo';
 
 const rootReducer = combineReducers({
     ui: uiReducer,
-    canvas: undoable(canvasReducer)
+    canvas: undoable(canvasReducer, {limit: 20})
 })
 
 export default createStore(rootReducer);

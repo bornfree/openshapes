@@ -162,14 +162,7 @@ class Surface extends React.Component {
               <Provider store={store}>
                 <Layer>
 
-                  {
-                    !this.props.disableLineDrawing?
-                    <Circle x={this.state.position.point.x} y={this.state.position.point.y} radius={this.props.brushSize/2} fill={this.rgbToString(this.props.brushColor)}/>
-                    :null
-                  }
                   
-                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} brushColor={this.props.brushColor}/>
-
                   {this.props.items.map((item, i) => 
 
                     item.itemType === "object"?
@@ -178,6 +171,20 @@ class Surface extends React.Component {
                       <CanvasLine key={item.id} {...item} />
                     
                   )}
+
+                  {
+                    !this.props.disableLineDrawing?
+                    <Circle 
+                      x={this.state.position.point.x} 
+                      y={this.state.position.point.y} 
+                      radius={this.props.brushSize/2} 
+                      fill={this.rgbToString(this.props.brushColor)}
+                      stroke='black'
+                      strokeWidth="1" />
+                    :null
+                  }
+                  
+                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} brushColor={this.props.brushColor}/>
 
                   <Handler selectedShapeName={this.state.selectedShapeName} />
                 </Layer>

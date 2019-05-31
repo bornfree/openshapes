@@ -104,9 +104,8 @@ code {
 .brushSize{
   margin-right:10px;
   display: inline-block;
-  background: rgb(27, 26, 22);
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  border-color: #dc3545;
+  border-color: #111111;
   border-style: solid;
 }

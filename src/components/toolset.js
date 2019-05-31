@@ -21,11 +21,14 @@ class Toolset extends React.Component {
     }
 
     getBrushStyle(i){
-        var borderWidth = this.props.brushSize === i? "4px": "0px"
+        var borderWidth = this.props.brushSize === i? "2px": "0px";
+        var rgb = this.props.brushColor;
+        var background =  `rgba(${rgb[0]},${rgb[1]},${rgb[2]})`;
         return {
             height: i +"px",
             width: i +"px",
-            borderWidth
+            borderWidth,
+            background
         }
     }
 
@@ -76,7 +79,8 @@ class Toolset extends React.Component {
 function mapStateToProps(state){
     return {
         selectedBackground: state.ui.selectedBackground,
-        brushSize: state.ui.brushSize
+        brushSize: state.ui.brushSize,
+        brushColor: state.ui.brushColor
     }
 }
 

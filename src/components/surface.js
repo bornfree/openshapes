@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer, Transformer } from 'react-konva';
+import { Stage, Layer, Transformer, Circle } from 'react-konva';
 import CanvasImage from './canvasImage';
 import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
@@ -50,7 +50,13 @@ class Surface extends React.Component {
     this.state = {
       selectedShapeName: '',
       dimensionsSet: false,
-      currentLine: []
+      currentLine: [],
+      position: {
+        point:{
+          x:-200,
+          y:-200
+        }
+      }
     };
     
     this.getCanvasHeight = this.getCanvasHeight.bind(this);
@@ -58,12 +64,23 @@ class Surface extends React.Component {
   }
   
   handleMouseDown = () => {
-    if(this.props.disableLineDrawing)
-      return
-    this._drawing = true;
-  };
+      if(this.props.disableLineDrawing)
+        return
+    
+      this._drawing = true;
+  }
 
   handleMouseMove = e => {
+
+    const stage = this.stageRef.getStage();
+    const point = stage.getPointerPosition();
+    
+    this.setState({
+      position: {
+        point
+      }
+    });
+
     if(this.props.disableLineDrawing)
       return
 
@@ -71,11 +88,12 @@ class Surface extends React.Component {
     if (!this._drawing) {
       return;
     }
-    const stage = this.stageRef.getStage();
-    const point = stage.getPointerPosition();
     
    this.setState({
-    currentLine: this.state.currentLine.concat([point.x, point.y])
+    currentLine: this.state.currentLine.concat([point.x, point.y]),
+    position: {
+      point
+    }
    });
 
   };
@@ -90,6 +108,17 @@ class Surface extends React.Component {
       currentLine: []
     });
   };
+
+  handleMouseLeave = () => {
+    this.setState({
+      position: {
+        point: {
+          x:-200,
+          y:-200
+        }
+      }
+    });
+  }
 
   handleStageClick = e => {
     this.setState({
@@ -111,6 +140,10 @@ class Surface extends React.Component {
     });
     
   }
+
+  rgbToString(rgb){
+    return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, 0.5)`
+}
   
   render(){
       
@@ -121,6 +154,7 @@ class Surface extends React.Component {
               onContentMousedown={this.handleMouseDown}
               onContentMousemove={this.handleMouseMove}
               onContentMouseup={this.handleMouseUp}
+              onContentMouseout={this.handleMouseLeave}
               ref={node => {
                 this.stageRef = node;
               }}
@@ -128,6 +162,12 @@ class Surface extends React.Component {
               <Provider store={store}>
                 <Layer>
 
+                  {
+                    !this.props.disableLineDrawing?
+                    <Circle x={this.state.position.point.x} y={this.state.position.point.y} radius={this.props.brushSize/2} fill={this.rgbToString(this.props.brushColor)}/>
+                    :null
+                  }
+                  
                   <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} brushColor={this.props.brushColor}/>
 
                   {this.props.items.map((item, i) => 

@@ -7,10 +7,12 @@ export const DRAW_LINE = "DRAW_LINE";
 
 export const REQUEST_DRAWING = "REQUEST_DRAWING";
 export const FETCH_DRAWING = "FETCH_DRAWING";
+export const SELECT_BACKGROUND = "SELECT_BACKGROUND";
+
+export const CHANGE_DRAWING_MODE = "CHANGE_DRAWING_MODE";
 export const UNDO = "UNDO";
 export const REDO = "REDO";
 export const DOWNLOAD_DRAWING = "DOWNLOAD_DRAWING";
 export const CLEAR_DRAWING = "CLEAR_DRAWING";
 
 export const CHANGE_BRUSH_SIZE = "CHANGE_BRUSH_SIZE";
-export const CHANGE_BRUSH_COLOR = "CHANGE_BRUSH_COLOR";

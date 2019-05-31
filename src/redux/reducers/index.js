@@ -1,9 +1,10 @@
-import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, REQUEST_DRAWING, FETCH_DRAWING, CHANGE_BRUSH_SIZE, CHANGE_BRUSH_COLOR, DRAW_LINE } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, REQUEST_DRAWING, FETCH_DRAWING, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CHANGE_DRAWING_MODE, CLEAR_DRAWING } from "../actionTypes";
 
 const initialState = {
   requestingDrawing: false,
-  selectedItem: "road",
-  brushSize: 5,
+  selectedBackground: "road",
+  brushSize: 40,
+  drawingMode: "background",
   brushColor: [0,0,0],
   canvasItems: [],
   resultImages: []
@@ -88,8 +89,16 @@ function rootReducer(state= initialState, action) {
         canvasItems: [...state.canvasItems, lineItem]
       }
     
-    case REQUEST_DRAWING:
+    case SELECT_BACKGROUND:
+      const {itemName, brushColor} = action.payload;
       return {
+        ...state,
+        selectedBackground: itemName,
+        brushColor
+      }
+    
+    case REQUEST_DRAWING:
+        return {
         ...state,
         requestingDrawing: true
       }
@@ -111,13 +120,22 @@ function rootReducer(state= initialState, action) {
         ...state,
         brushSize
       }
+    
+    case DOWNLOAD_DRAWING:
+      return state;
+    
+    case CLEAR_DRAWING:
+      return {
+        ...state,
+        canvasItems : []
+      }
 
-    case CHANGE_BRUSH_COLOR:
-        const {brushColor} = action.payload;
-        return {
-          ...state,
-          brushColor
-        }
+    case CHANGE_DRAWING_MODE:
+      const {drawingMode} = action.payload;
+      return {
+        ...state,
+        drawingMode
+      }
 
     default: 
       return state;

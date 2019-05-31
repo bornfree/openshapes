@@ -9,12 +9,5 @@ export default class CanvasLine extends React.Component {
     render(){
         return <Line ref={node => this.konvaLine = node} points={this.props.points} stroke={this.rgbToString(this.props.brushColor)} tension={.7} strokeWidth={this.props.brushSize}  />
     }
-}
-
-function mapStateToProps(state){
-    return {
-      state
-    }
-  }
-  
+}  
   

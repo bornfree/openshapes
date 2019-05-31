@@ -60,10 +60,15 @@ class Surface extends React.Component {
   }
   
   handleMouseDown = () => {
+    if(this.props.disableLineDrawing)
+      return
     this._drawing = true;
   };
 
   handleMouseMove = e => {
+    if(this.props.disableLineDrawing)
+      return
+
     // no drawing - skipping
     if (!this._drawing) {
       return;
@@ -78,6 +83,9 @@ class Surface extends React.Component {
   };
 
   handleMouseUp = () => {
+    if(this.props.disableLineDrawing)
+      return
+
     this._drawing = false;
     this.props.drawLine(this.state.currentLine);
     this.setState({
@@ -172,7 +180,8 @@ function mapStateToProps(state){
     items: state.canvasItems,
     brushSize: state.brushSize,
     brushColor: state.brushColor,
-    requestingDrawing: state.requestingDrawing
+    requestingDrawing: state.requestingDrawing,
+    disableLineDrawing: (state.drawingMode === "object")
   }
 }
 

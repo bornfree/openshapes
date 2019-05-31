@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { requestDrawing } from '../redux/actions';
+import { requestDrawing, downloadDrawing, clearDrawing } from '../redux/actions';
 
 /*
 Controls
@@ -32,12 +32,12 @@ class Controls extends React.Component {
                         <p><small>Redo</small></p>
                     </div>
 
-                    <div className="col-md-12 text-center top-margin-20 control-button">
+                    <div className="col-md-12 text-center top-margin-20 control-button" onClick={() => this.props.downloadDrawing()} >
                         <i className="fas fa-download fa-2x"></i>
                         <p><small>Download</small></p>
                     </div>
 
-                    <div className="col-md-12 text-center top-margin-20 control-button">
+                    <div className="col-md-12 text-center top-margin-20 control-button" onClick={() => this.props.clearDrawing()}>
                         <i className="fas fa-times fa-2x"></i>
                         <p><small>Clear</small></p>
                     </div>
@@ -51,5 +51,5 @@ class Controls extends React.Component {
 
 export default connect(
     mapStateToProps,
-    {requestDrawing}
+    {requestDrawing, downloadDrawing, clearDrawing}
   )(Controls)

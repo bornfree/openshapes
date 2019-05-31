@@ -16,10 +16,10 @@ class Results extends React.Component {
             <div id="results" className="top-margin-20">
                 <p><b>Drawings</b></p>
                 <div className="row">
-                {[1,2,3,4,5].map((i) => 
+                {this.props.resultImages.map((i) => 
                     <div key={i} className="col-md-2">
                         <div className="result">
-                            <img ></img>
+                            <img src={i} className="img img-fluid"></img>
                         </div>
                     </div>
                 )}
@@ -30,8 +30,9 @@ class Results extends React.Component {
 }
 
 function mapStateToProps(state){
+    console.log("Resss", state);
     return {
-      state
+        resultImages: state.ui.resultImages
     }
   }
   

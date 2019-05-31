@@ -5,7 +5,8 @@ const initialState = {
   selectedBackground: "road",
   brushSize: 40,
   drawingMode: "background",
-  brushColor: [0,0,0]
+  brushColor: [0,0,0],
+  resultImages:[]
 };
 
 function uiReducer(state= initialState, action) {
@@ -39,7 +40,7 @@ function uiReducer(state= initialState, action) {
     case FETCH_DRAWING:
       var resultImages = []
       for(var i = 0; i < 5;i++){
-        resultImages.push(action.payload.results[i].url)
+        resultImages.push(action.payload.results[i].download_url)
       }
       return{
         ...state,

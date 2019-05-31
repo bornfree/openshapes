@@ -1,4 +1,4 @@
-import { CREATE_DRAWING, CHANGE_BRUSH_SIZE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CHANGE_DRAWING_MODE } from "../actionTypes";
+import { CHANGE_BRUSH_SIZE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CHANGE_DRAWING_MODE, REQUEST_DRAWING, FETCH_DRAWING } from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 function uiReducer(state= initialState, action) {
-  
+  console.log(action);
   switch(action.type){
     
     case SELECT_BACKGROUND:
@@ -20,12 +20,6 @@ function uiReducer(state= initialState, action) {
         brushColor
       }
     
-    case CREATE_DRAWING:
-      return {
-        ...state,
-        drawingInProgress: true
-      }
-
     case CHANGE_BRUSH_SIZE:
       const {brushSize} = action.payload;
       return {
@@ -35,6 +29,23 @@ function uiReducer(state= initialState, action) {
     
     case DOWNLOAD_DRAWING:
       return state;
+    
+    case REQUEST_DRAWING:
+      return {
+        ...state,
+        requestingDrawing: true
+      }
+
+    case FETCH_DRAWING:
+      var resultImages = []
+      for(var i = 0; i < 5;i++){
+        resultImages.push(action.payload.results[i].url)
+      }
+      return{
+        ...state,
+        requestingDrawing: false,
+        resultImages
+      }
     
     case CHANGE_DRAWING_MODE:
       const {drawingMode} = action.payload;

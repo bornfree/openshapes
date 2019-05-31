@@ -1,11 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 import { Stage, Layer, Transformer, Circle } from 'react-konva';
 import CanvasImage from './canvasImage';
 import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import {drawLine} from '../redux/actions'
+import {drawLine, fetchDrawing} from '../redux/actions'
 
 /*
 Surface
@@ -50,6 +51,7 @@ class Surface extends React.Component {
     this.state = {
       selectedShapeName: '',
       dimensionsSet: false,
+      requestingDrawing: false,
       currentLine: [],
       position: {
         point:{
@@ -134,6 +136,16 @@ class Surface extends React.Component {
     return this.state.dimensionsSet? this.surface.clientHeight : 10;
   }
 
+  handleCreateClick(){
+    axios.get(`https://picsum.photos/v2/list`)
+      .then(res => {
+        const results = res.data;
+        this.setState({requestingDrawing : false});
+        this.props.fetchDrawing(results);
+      })
+  
+  }
+
   componentDidMount(){
     this.setState({
       dimensionsSet: true
@@ -143,7 +155,19 @@ class Surface extends React.Component {
 
   rgbToString(rgb){
     return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, 0.5)`
-}
+  }
+
+  componentDidUpdate(){
+    
+    if(this.state.requestingDrawing){
+      this.handleCreateClick();
+      
+    }
+
+    if(this.props.requestingDrawing && this.state.requestingDrawing === false){
+      this.setState({requestingDrawing : true});
+    }
+  }
   
   render(){
       
@@ -201,11 +225,12 @@ function mapStateToProps(state){
     items: state.canvas.present.items,
     brushSize: state.ui.brushSize,
     disableLineDrawing: (state.ui.drawingMode === "object"),
-    brushColor: state.ui.brushColor
+    brushColor: state.ui.brushColor,
+    requestingDrawing: state.ui.requestingDrawing
   }
 }
 
 export default connect(
   mapStateToProps,
-  {drawLine}
+  {drawLine, fetchDrawing}
 )(Surface)

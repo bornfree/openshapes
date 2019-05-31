@@ -5,10 +5,11 @@ export const TRANSFORM_OBJECT = "TRANSFORM_OBJECT";
 
 export const DRAW_LINE = "DRAW_LINE";
 
+export const REQUEST_DRAWING = "REQUEST_DRAWING";
+export const FETCH_DRAWING = "FETCH_DRAWING";
 export const SELECT_BACKGROUND = "SELECT_BACKGROUND";
 
 export const CHANGE_DRAWING_MODE = "CHANGE_DRAWING_MODE";
-export const CREATE_DRAWING = "CREATE_DRAWING";
 export const UNDO = "UNDO";
 export const REDO = "REDO";
 export const DOWNLOAD_DRAWING = "DOWNLOAD_DRAWING";

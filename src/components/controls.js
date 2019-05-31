@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createDrawing, downloadDrawing, clearDrawing, undo, redo } from '../redux/actions';
+import { requestDrawing, downloadDrawing, clearDrawing, undo, redo } from '../redux/actions';
 
 /*
 Controls
@@ -13,7 +13,7 @@ class Controls extends React.Component {
             <div id="controls">
                 <div className="row">
                     <div className="col text-center top-margin-20 bottom-margin-20">
-                        <button className="btn btn-warning top-margin-20" onClick={() => this.props.createDrawing()} disabled={this.props.drawingInProgress}>
+                        <button className="btn btn-warning top-margin-20" onClick={() => this.props.requestDrawing()} disabled={this.props.requestingDrawing}>
                             <b>Create</b>
                         </button>
                     </div>
@@ -63,5 +63,5 @@ function mapStateToProps(state){
 
 export default connect(
     mapStateToProps,
-    {createDrawing, downloadDrawing, clearDrawing, undo, redo}
+    {requestDrawing, downloadDrawing, clearDrawing, undo, redo}
   )(Controls)

@@ -1,4 +1,4 @@
-import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CLEAR_DRAWING, CHANGE_DRAWING_MODE } from "./actionTypes";
+import { ADD_OBJECT, REQUEST_DRAWING, FETCH_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CLEAR_DRAWING, CHANGE_DRAWING_MODE } from "./actionTypes";
 import uuid from "uuid";
 import { ActionCreators } from 'redux-undo';
 
@@ -39,16 +39,24 @@ export const drawLine = (points, brushColor, brushSize) => ({
   }
 });
 
+export const requestDrawing = () => ({
+  type: REQUEST_DRAWING,
+  
+});
+
+export const fetchDrawing = (results) => ({
+  type: FETCH_DRAWING,
+  payload:{
+    results
+  }
+});
+  
 export const selectBackground = (itemName, brushColor) => ({
   type: SELECT_BACKGROUND,
   payload: {
     itemName,
     brushColor
   }
-});
-
-export const createDrawing = () => ({
-  type: CREATE_DRAWING
 });
 
 export const downloadDrawing = () => ({

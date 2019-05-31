@@ -2,10 +2,6 @@ import React from 'react';
 import { Line } from 'react-konva';
 
 export default class CanvasLine extends React.Component {
-    constructor(props){
-        super(props);
-        
-    }
 
     rgbToString(rgb){
         return `rgba(${rgb[0]},${rgb[1]},${rgb[2]})`

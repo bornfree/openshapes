@@ -1,11 +1,12 @@
 import React from 'react';
-import { Stage, Layer, Transformer, Line } from 'react-konva';
+import axios from 'axios';
+import { Stage, Layer, Transformer } from 'react-konva';
 import CanvasImage from './canvasImage';
 import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import {drawLine} from '../redux/actions'
+import {drawLine, fetchDrawing} from '../redux/actions'
 
 /*
 Surface
@@ -50,7 +51,8 @@ class Surface extends React.Component {
     this.state = {
       selectedShapeName: '',
       dimensionsSet: false,
-      currentLine: []
+      currentLine: [],
+      requestingDrawing: false
     };
     
     this.getCanvasHeight = this.getCanvasHeight.bind(this);
@@ -97,11 +99,33 @@ class Surface extends React.Component {
     return this.state.dimensionsSet? this.surface.clientHeight : 10;
   }
 
+  handleCreateClick(){
+    axios.get(`https://picsum.photos/v2/list`)
+      .then(res => {
+        const results = res.data;
+        this.setState({requestingDrawing : false});
+        this.props.fetchDrawing(results);
+      })
+  
+  }
+
   componentDidMount(){
     this.setState({
       dimensionsSet: true
     });
     
+  }
+
+  componentDidUpdate(){
+    
+    if(this.state.requestingDrawing){
+      this.handleCreateClick();
+      
+    }
+
+    if(this.props.requestingDrawing && this.state.requestingDrawing === false){
+      this.setState({requestingDrawing : true});
+    }
   }
   
   render(){
@@ -142,15 +166,17 @@ class Surface extends React.Component {
 }
 
 function mapStateToProps(state){
+
   console.log("state", state);
   return {
     items: state.canvasItems,
     brushSize: state.brushSize,
-    brushColor: state.brushColor
+    brushColor: state.brushColor,
+    requestingDrawing: state.requestingDrawing
   }
 }
 
 export default connect(
   mapStateToProps,
-  {drawLine}
+  {drawLine, fetchDrawing}
 )(Surface)

@@ -1,10 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 /*
 Results
 */
 
-export default class Results extends React.Component {
+class Results extends React.Component {
+
+    getDrawings(){
+
+    }
 
     render(){
         return(
@@ -14,6 +19,7 @@ export default class Results extends React.Component {
                 {[1,2,3,4,5].map((i) => 
                     <div key={i} className="col-md-2">
                         <div className="result">
+                            <img ></img>
                         </div>
                     </div>
                 )}
@@ -22,3 +28,14 @@ export default class Results extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state){
+    return {
+      state
+    }
+  }
+  
+  export default connect(
+    mapStateToProps,
+    //{transformObject, moveObject}
+  )(Results)

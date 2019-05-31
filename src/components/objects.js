@@ -21,7 +21,7 @@ class Objects extends React.Component {
         return(
             <div id="objects">
                 {things.map((item) =>
-                <button key={item.name} className="btn btn-hollow btn-sm item-button" onClick={() => this.handleAddObject(item.name)}>
+                <button key={item.name} className="btn btn-outline-primary btn-sm item-button" onClick={() => this.handleAddObject(item.name)}>
                     {item.name}
                 </button>    
                 )}

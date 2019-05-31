@@ -22,18 +22,15 @@ class Toolset extends React.Component {
 
     getBrushStyle(i){
         var borderWidth = this.props.brushSize === i? "2px": "0px";
-        var rgb = this.props.brushColor;
-        var background =  `rgba(${rgb[0]},${rgb[1]},${rgb[2]})`;
         return {
             height: i +"px",
             width: i +"px",
             borderWidth,
-            background
         }
     }
 
     getButtonStyle(name){
-        return this.props.selectedBackground === name? "btn btn-danger btn-sm item-button": "btn btn-hollow btn-sm item-button"
+        return this.props.selectedBackground === name? "btn btn-hollow btn-sm item-button": "btn btn-outline-primary btn-sm item-button"
     }
 
     render(){

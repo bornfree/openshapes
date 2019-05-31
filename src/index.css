@@ -108,4 +108,9 @@ code {
   border-radius: 50%;
   border-color: #111111;
   border-style: solid;
+  background: #4e73df;
+}
+
+.item-button:hover{
+  background: #4e73df;
 }

@@ -106,9 +106,8 @@ code {
   display: inline-block;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  border-color: #111111;
+  border-color: #4e73df;
   border-style: solid;
-  background: #4e73df;
 }
 
 .item-button:hover{

@@ -21,11 +21,13 @@ class Toolset extends React.Component {
     }
 
     getBrushStyle(i){
-        var borderWidth = this.props.brushSize === i? "2px": "0px";
+        var borderWidth = this.props.brushSize === i? "3px": "1px";
+        var background = this.props.brushSize === i? "#4e73df": "none";
         return {
             height: i +"px",
             width: i +"px",
             borderWidth,
+            background
         }
     }
 

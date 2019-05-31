@@ -64,10 +64,18 @@ code {
   cursor: pointer;
   background: white;
   height: 10vh;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 0 0 2px 2px #E6E6E6;
-  box-shadow: 0 0 2px 2px #E6E6E6;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 4px 4px #E6E6E6;
+  box-shadow: 0 0 4px 4px #E6E6E6;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip:    padding; 
+  background-clip:         padding-box;
+}
+
+.result img{
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .item-button{

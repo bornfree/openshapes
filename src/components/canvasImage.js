@@ -25,7 +25,7 @@ class CanvasImage extends React.Component {
   }
 
   handleTransformEnd(){
-    this.props.transformObject(this.props.id, this.konvaImage.rotation(), this.konvaImage.scaleX(), this.konvaImage.scaleY());
+    this.props.transformObject(this.props.id, this.konvaImage.x(), this.konvaImage.y(), this.konvaImage.rotation(), this.konvaImage.scaleX(), this.konvaImage.scaleY());
   }
 
   handleDragEnd(){

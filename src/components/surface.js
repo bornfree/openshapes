@@ -221,6 +221,7 @@ class Surface extends React.Component {
 }
 
 function mapStateToProps(state){
+  console.log(state);
   return {
     items: state.canvas.present.items,
     brushSize: state.ui.brushSize,

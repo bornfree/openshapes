@@ -50,6 +50,8 @@ function canvasReducer(state= initialState, action) {
         if(item.id === action.payload.id){
             const transformedItem = {
                 ...item,
+                x: action.payload.x,
+                y: action.payload.y,
                 rotation: action.payload.rotation,
                 scaleX: action.payload.scaleX,
                 scaleY: action.payload.scaleY,

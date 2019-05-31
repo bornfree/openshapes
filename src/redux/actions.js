@@ -10,10 +10,12 @@ export const addObject = objectName => ({
   }
 });
 
-export const transformObject = (id, rotation, scaleX, scaleY) => ({
+export const transformObject = (id, x,y, rotation, scaleX, scaleY) => ({
   type: TRANSFORM_OBJECT,
   payload: {
     id,
+    x,
+    y,
     rotation,
     scaleX,
     scaleY

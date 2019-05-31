@@ -62,13 +62,12 @@ code {
 
 .result{
   cursor: pointer;
-  padding: 5px;
   background: white;
   height: 10vh;
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  -webkit-box-shadow: 0 0 5px 5px #E6E6E6;
-  box-shadow: 0 0 5px 5px #E6E6E6;
+  -webkit-box-shadow: 0 0 2px 2px #E6E6E6;
+  box-shadow: 0 0 2px 2px #E6E6E6;
 }
 
 .item-button{

@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createDrawing, downloadDrawing, clearDrawing } from '../redux/actions';
+import { createDrawing, downloadDrawing, clearDrawing, undo, redo } from '../redux/actions';
 
 /*
 Controls
 */
-
-function mapStateToProps(state){
-    return state;
-}
 
 class Controls extends React.Component {
 
@@ -22,12 +18,12 @@ class Controls extends React.Component {
                         </button>
                     </div>
 
-                    <div className="col-md-12 text-center top-margin-20 control-button">
+                    <div className="col-md-12 text-center top-margin-20 control-button" onClick={()=> this.props.undo()}>
                         <i className="fas fa-undo fa-2x"></i>
                         <p><small>Undo</small></p>
                     </div>
 
-                    <div className="col-md-12 text-center top-margin-20 control-button">
+                    <div className="col-md-12 text-center top-margin-20 control-button" onClick={()=> this.props.redo()}>
                         <i className="fas fa-redo fa-2x"></i>
                         <p><small>Redo</small></p>
                     </div>
@@ -49,7 +45,23 @@ class Controls extends React.Component {
 
 }
 
+function mapStateToProps(state){
+    return {
+        drawingInProgress: state.ui.drawingInProgress
+    }
+}
+
+// function mapDispatchToProps(dispatch){
+//     return {
+//         createDrawing,
+//         downloadDrawing,
+//         clearDrawing,
+//         undo: () => dispatch(ActionCreators.undo()),
+//         redo: () => dispatch(ActionCreators.redo())
+//     }
+// }
+
 export default connect(
     mapStateToProps,
-    {createDrawing, downloadDrawing, clearDrawing}
+    {createDrawing, downloadDrawing, clearDrawing, undo, redo}
   )(Controls)

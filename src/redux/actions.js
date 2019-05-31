@@ -1,11 +1,12 @@
-import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CLEAR_DRAWING, CHANGE_DRAWING_MODE, CHANGE_BRUSH_COLOR } from "./actionTypes";
+import { ADD_OBJECT, CREATE_DRAWING, TRANSFORM_OBJECT, MOVE_OBJECT, CHANGE_BRUSH_SIZE, DRAW_LINE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CLEAR_DRAWING, CHANGE_DRAWING_MODE } from "./actionTypes";
 import uuid from "uuid";
+import { ActionCreators } from 'redux-undo';
 
 export const addObject = objectName => ({
   type: ADD_OBJECT,
   payload: {
     id: uuid.v4(), 
-    url: "http://localhost:5000/" +  objectName + ".svg"
+    url: "/images/" +  objectName + ".svg"
   }
 });
 
@@ -28,11 +29,13 @@ export const moveObject = (id, x, y) => ({
   }
 });
 
-export const drawLine = (points) => ({
+export const drawLine = (points, brushColor, brushSize) => ({
   type: DRAW_LINE,
   payload: {
     id: uuid.v4(),
-    points
+    points,
+    brushColor,
+    brushSize
   }
 });
 
@@ -69,3 +72,6 @@ export const changeBrushSize = (brushSize) => ({
     brushSize
   }
 });
+
+export const undo = ActionCreators.undo
+export const redo = ActionCreators.redo

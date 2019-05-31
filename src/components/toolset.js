@@ -16,6 +16,10 @@ var nonThings = items.filter((item) =>
 
 class Toolset extends React.Component {
 
+    componentDidMount(){
+        this.props.selectBackground("road", [128, 64, 128]);
+    }
+
     getBrushStyle(i){
         var borderWidth = this.props.brushSize === i? "4px": "0px"
         return {
@@ -71,8 +75,8 @@ class Toolset extends React.Component {
 
 function mapStateToProps(state){
     return {
-        selectedBackground: state.selectedBackground,
-        brushSize: state.brushSize
+        selectedBackground: state.ui.selectedBackground,
+        brushSize: state.ui.brushSize
     }
 }
 

@@ -39,19 +39,18 @@ class CanvasImage extends React.Component {
         image={this.state.image}
         onTransformEnd={() => this.handleTransformEnd()} 
         onDragEnd={() =>this.handleDragEnd()} 
-        name={this.props.id} 
+        name={this.props.id}
+        x={this.props.x}
+        y={this.props.y}
+        scaleX={this.props.scaleX}
+        scaleY={this.props.scaleY}
+        rotation={this.props.rotation}
         draggable />
       );
   }
 }
 
-function mapStateToProps(state){
-  return {
-    state
-  }
-}
-
 export default connect(
-  mapStateToProps,
+  null,
   {transformObject, moveObject}
 )(CanvasImage)

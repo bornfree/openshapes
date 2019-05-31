@@ -85,7 +85,7 @@ class Surface extends React.Component {
       return
 
     this._drawing = false;
-    this.props.drawLine(this.state.currentLine);
+    this.props.drawLine(this.state.currentLine, this.props.brushColor, this.props.brushSize);
     this.setState({
       currentLine: []
     });
@@ -150,12 +150,11 @@ class Surface extends React.Component {
 }
 
 function mapStateToProps(state){
-  console.log("state", state);
   return {
-    items: state.canvasItems,
-    brushSize: state.brushSize,
-    disableLineDrawing: (state.drawingMode === "object"),
-    brushColor: state.brushColor
+    items: state.canvas.present.items,
+    brushSize: state.ui.brushSize,
+    disableLineDrawing: (state.ui.drawingMode === "object"),
+    brushColor: state.ui.brushColor
   }
 }
 

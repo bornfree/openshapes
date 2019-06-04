@@ -14,7 +14,11 @@ class Controls extends React.Component {
                 <div className="row">
                     <div className="col text-center top-margin-20 bottom-margin-20">
                         <button className="btn btn-warning top-margin-20" onClick={() => this.props.requestDrawing()} disabled={this.props.requestingDrawing}>
-                            <b>Create</b>
+                            
+                            {this.props.requestingDrawing?
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            :<b>Create</b>}
+
                         </button>
                     </div>
 
@@ -47,7 +51,7 @@ class Controls extends React.Component {
 
 function mapStateToProps(state){
     return {
-        drawingInProgress: state.ui.drawingInProgress
+        requestingDrawing: state.ui.requestingDrawing
     }
 }
 

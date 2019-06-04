@@ -6,7 +6,7 @@ import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import {drawLine, fetchDrawing} from '../redux/actions'
+import {drawLine, fetchDrawing, selectDrawing} from '../redux/actions'
 
 /*
 Surface
@@ -191,6 +191,7 @@ class Surface extends React.Component {
         const results = res.data;
         this.setState({requestingDrawing : false});
         this.props.fetchDrawing(results);
+        this.props.selectDrawing(results[0].download_url);
       })
   
   }
@@ -291,5 +292,5 @@ function mapStateToProps(state){
 
 export default connect(
   mapStateToProps,
-  {drawLine, fetchDrawing}
+  {drawLine, fetchDrawing, selectDrawing}
 )(Surface)

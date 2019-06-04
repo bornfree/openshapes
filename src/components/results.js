@@ -12,6 +12,7 @@ class Results extends React.Component {
         return(
             <div id="results" className="top-margin-20">
                 {this.props.resultImages.length > 0?
+                         
                     <p><b>Drawings</b></p>
                     :null
                 }

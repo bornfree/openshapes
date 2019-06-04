@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Stage, Layer, Transformer, Circle } from 'react-konva';
+import { Stage, Layer,Image, Transformer, Circle } from 'react-konva';
 import CanvasImage from './canvasImage';
 import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
@@ -39,6 +39,55 @@ class Handler extends React.Component {
           this.transformer = node;
         }
       }
+      />
+    );
+  }
+}
+
+class Drawing extends React.Component {
+  state = {
+    image: null
+  };
+  componentDidMount() {
+    this.loadImage();
+  }
+  componentDidUpdate(oldProps) {
+    if (oldProps.src !== this.props.src) {
+      this.loadImage();
+    }
+  }
+  componentWillUnmount() {
+    this.image.removeEventListener('load', this.handleLoad);
+  }
+  loadImage() {
+    // save to "this" to remove "load" handler on unmount
+    this.image = new window.Image();
+    this.image.src = this.props.src;
+    this.image.height = this.props.height;
+    this.image.width = this.props.width;
+    this.image.addEventListener('load', this.handleLoad);
+  }
+  handleLoad = () => {
+    // after setState react-konva will update canvas and redraw the layer
+    // because "image" property is changed
+    this.setState({
+      image: this.image,
+      width: this.width,
+      height: this.height
+    });
+    // if you keep same image object during source updates
+    // you will have to update layer manually:
+    // this.imageNode.getLayer().batchDraw();
+  };
+  render() {
+    return (
+      <Image
+        x={0}
+        y={0}
+        image={this.state.image}
+        ref={node => {
+          this.imageNode = node;
+        }}
       />
     );
   }
@@ -185,6 +234,14 @@ class Surface extends React.Component {
               >
               <Provider store={store}>
                 <Layer>
+                {
+                    this.props.selectedDrawing?
+                    <Drawing src={this.props.selectedDrawing} width={this.getCanvasWidth()} height={this.getCanvasHeight()}/>
+                    :null
+
+                }
+                </Layer>
+                <Layer>
 
                   
                   {this.props.items.map((item, i) => 
@@ -227,7 +284,8 @@ function mapStateToProps(state){
     brushSize: state.ui.brushSize,
     disableLineDrawing: (state.ui.drawingMode === "object"),
     brushColor: state.ui.brushColor,
-    requestingDrawing: state.ui.requestingDrawing
+    requestingDrawing: state.ui.requestingDrawing,
+    selectedDrawing: state.canvas.present.selectedDrawing
   }
 }
 

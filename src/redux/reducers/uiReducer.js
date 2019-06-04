@@ -1,4 +1,4 @@
-import { CHANGE_BRUSH_SIZE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CHANGE_DRAWING_MODE, REQUEST_DRAWING, FETCH_DRAWING } from "../actionTypes";
+import { CHANGE_BRUSH_SIZE, SELECT_BACKGROUND, DOWNLOAD_DRAWING, CHANGE_DRAWING_MODE, REQUEST_DRAWING, FETCH_DRAWING} from "../actionTypes";
 
 const initialState = {
   drawingInProgress: false,
@@ -48,6 +48,7 @@ function uiReducer(state= initialState, action) {
         resultImages
       }
     
+
     case CHANGE_DRAWING_MODE:
       const {drawingMode} = action.payload;
       return {

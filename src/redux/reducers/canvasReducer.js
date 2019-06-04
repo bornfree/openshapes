@@ -1,4 +1,4 @@
-import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, DRAW_LINE, CLEAR_DRAWING } from "../actionTypes";
+import { ADD_OBJECT, MOVE_OBJECT, TRANSFORM_OBJECT, DRAW_LINE, CLEAR_DRAWING, SELECT_DRAWING } from "../actionTypes";
 
 const initialState = {
     items: []
@@ -85,7 +85,13 @@ function canvasReducer(state= initialState, action) {
         ...state,
         items : []
       }
-
+    
+    case SELECT_DRAWING:
+      return{
+        ...state,
+        selectedDrawing: action.payload.drawing
+      }
+    
     default: 
       return state;
   }

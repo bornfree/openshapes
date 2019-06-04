@@ -1,16 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectDrawing } from '../redux/actions';
 
 /*
 Results
 */
 
 class Results extends React.Component {
-
-    getDrawings(){
-
-    }
-
+    
     render(){
         return(
             <div id="results" className="top-margin-20">
@@ -22,7 +19,7 @@ class Results extends React.Component {
                 {this.props.resultImages.map((i) => 
                     <div key={i} className="col-md-2">
                         <div className="result">
-                            <img src={i} className="img img-fluid"></img>
+                            <img src={i} className="img img-fluid" onClick={() => this.props.selectDrawing(i)}></img>
                         </div>
                     </div>
                 )}
@@ -41,5 +38,5 @@ function mapStateToProps(state){
   
   export default connect(
     mapStateToProps,
-    //{transformObject, moveObject}
+    {selectDrawing}
   )(Results)

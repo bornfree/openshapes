@@ -186,6 +186,8 @@ class Surface extends React.Component {
   }
 
   handleCreateClick(){
+    // image.src = this.stageRef.toDataURL();
+  
     axios.get(`https://picsum.photos/v2/list`)
       .then(res => {
         const results = res.data;

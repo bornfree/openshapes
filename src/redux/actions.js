@@ -2,11 +2,11 @@ import { ADD_OBJECT, REQUEST_DRAWING, FETCH_DRAWING, SELECT_DRAWING, TRANSFORM_O
 import uuid from "uuid";
 import { ActionCreators } from 'redux-undo';
 
-export const addObject = objectName => ({
+export const addObject = (objectName, index) => ({
   type: ADD_OBJECT,
   payload: {
     id: uuid.v4(), 
-    url: "/images/" +  objectName + ".svg"
+    url: "/images/" +  objectName.replace(" ", "_") + "/" +index +".png"
   }
 });
 

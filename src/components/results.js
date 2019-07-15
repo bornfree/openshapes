@@ -31,7 +31,6 @@ class Results extends React.Component {
 }
 
 function mapStateToProps(state){
-    console.log("Resss", state);
     return {
         resultImages: state.ui.resultImages
     }

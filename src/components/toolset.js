@@ -51,7 +51,7 @@ class Toolset extends React.Component {
                         <div id="backgrounds">
                             <div id="brushSizes">
                                 <p>Brush Size</p>
-                                {[10, 20, 40, 60, 80].map((i) => 
+                                {[10, 20, 30, 50, 120].map((i) => 
                                 <div key={i} className="brushSize" style={this.getBrushStyle(i)} onClick={() => this.props.changeBrushSize(i)}/>
                                 )}
                             </div>

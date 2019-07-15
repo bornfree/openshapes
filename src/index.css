@@ -83,7 +83,18 @@ code {
   margin: 10px 10px 0px 0px;
 }
 
-#backgrounds, #objects{
+#backgrounds{
+  height: 75vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 5px 10px;
+}
+
+#objects{
+  overflow-x: hidden;
+}
+
+#object-names, #object-images{
   height: 75vh;
   overflow-y: scroll;
   padding: 5px 10px;
@@ -118,6 +129,28 @@ code {
   border-style: solid;
 }
 
+#object-images img{
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+
 .item-button:hover{
   background: #4e73df;
+}
+
+.object-button{
+  color: #4e73df;
+  padding: 5px 0px 5px 10px;
+  cursor: pointer;
+}
+
+.object-button:hover{
+  background: #4e73df;
+  color: white;
+}
+
+.selected-object-button{
+  background: #4e73df;
+  color: white;
 }

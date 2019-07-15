@@ -112,6 +112,7 @@ class Surface extends React.Component {
     
     this.getCanvasHeight = this.getCanvasHeight.bind(this);
     this.getCanvasWidth = this.getCanvasWidth.bind(this);
+    this.drawingInProgress = false;
   }
   
   handleMouseDown = () => {
@@ -188,6 +189,9 @@ class Surface extends React.Component {
   handleCreateClick(){
     var inputMapBase64 = this.stageRef.toDataURL();
     var instanceMapBase64 = this.stageRef.toDataURL();
+    this.drawingInProgress = true;
+
+    console.log("calling")
   
     axios.post(`http://devbox1.vision.cs.cmu.edu:3000/generate`,{
       input_map : inputMapBase64,
@@ -195,10 +199,11 @@ class Surface extends React.Component {
     })
       .then(res => {
         const results = res.data.results;
-        this.setState({requestingDrawing : false});
+        // this.setState({requestingDrawing : false});
+        this.drawingInProgress = false;
         this.props.fetchDrawing(results);
-        this.props.selectDrawing(results[0]);
         this.props.clearDrawing();
+        this.props.selectDrawing(results[0]);
       })
       
   }
@@ -216,13 +221,8 @@ class Surface extends React.Component {
 
   componentDidUpdate(){
     
-    if(this.state.requestingDrawing){
+    if(this.props.requestingDrawing && this.drawingInProgress === false){
       this.handleCreateClick();
-      
-    }
-
-    if(this.props.requestingDrawing && this.state.requestingDrawing === false){
-      this.setState({requestingDrawing : true});
     }
   }
   

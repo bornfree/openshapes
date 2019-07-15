@@ -83,6 +83,7 @@ function canvasReducer(state= initialState, action) {
     case CLEAR_DRAWING:
       return {
         ...state,
+        selectedDrawing: "",
         items : []
       }
     

@@ -6,7 +6,7 @@ import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import {drawLine, fetchDrawing, selectDrawing} from '../redux/actions'
+import {drawLine, fetchDrawing, selectDrawing, clearDrawing} from '../redux/actions'
 
 /*
 Surface
@@ -186,16 +186,21 @@ class Surface extends React.Component {
   }
 
   handleCreateClick(){
-    // image.src = this.stageRef.toDataURL();
+    var inputMapBase64 = this.stageRef.toDataURL();
+    var instanceMapBase64 = this.stageRef.toDataURL();
   
-    axios.get(`https://picsum.photos/v2/list`)
+    axios.post(`http://devbox1.vision.cs.cmu.edu:3000/generate`,{
+      input_map : inputMapBase64,
+      instance_map : inputMapBase64
+    })
       .then(res => {
-        const results = res.data;
+        const results = res.data.results;
         this.setState({requestingDrawing : false});
         this.props.fetchDrawing(results);
-        this.props.selectDrawing(results[0].download_url);
+        this.props.selectDrawing(results[0]);
+        this.props.clearDrawing();
       })
-  
+      
   }
 
   componentDidMount(){
@@ -294,5 +299,5 @@ function mapStateToProps(state){
 
 export default connect(
   mapStateToProps,
-  {drawLine, fetchDrawing, selectDrawing}
+  {drawLine, fetchDrawing, selectDrawing, clearDrawing}
 )(Surface)

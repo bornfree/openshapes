@@ -40,7 +40,7 @@ function uiReducer(state= initialState, action) {
     case FETCH_DRAWING:
       var resultImages = []
       for(var i = 0; i < 5;i++){
-        resultImages.push(action.payload.results[i].download_url)
+        resultImages.push(action.payload.results[i])
       }
       return{
         ...state,

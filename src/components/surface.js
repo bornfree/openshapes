@@ -44,60 +44,12 @@ class Handler extends React.Component {
   }
 }
 
-class Drawing extends React.Component {
-  state = {
-    image: null
-  };
-  componentDidMount() {
-    this.loadImage();
-  }
-  componentDidUpdate(oldProps) {
-    if (oldProps.src !== this.props.src) {
-      this.loadImage();
-    }
-  }
-  componentWillUnmount() {
-    this.image.removeEventListener('load', this.handleLoad);
-  }
-  loadImage() {
-    // save to "this" to remove "load" handler on unmount
-    this.image = new window.Image();
-    this.image.src = this.props.src;
-    this.image.height = this.props.height;
-    this.image.width = this.props.width;
-    this.image.addEventListener('load', this.handleLoad);
-  }
-  handleLoad = () => {
-    // after setState react-konva will update canvas and redraw the layer
-    // because "image" property is changed
-    this.setState({
-      image: this.image,
-      width: this.width,
-      height: this.height
-    });
-    // if you keep same image object during source updates
-    // you will have to update layer manually:
-    // this.imageNode.getLayer().batchDraw();
-  };
-  render() {
-    return (
-      <Image
-        x={0}
-        y={0}
-        image={this.state.image}
-        ref={node => {
-          this.imageNode = node;
-        }}
-      />
-    );
-  }
-}
-
 class Surface extends React.Component {
 
   constructor(props){
     super(props);
     this.state = {
+      height: null,
       selectedShapeName: '',
       dimensionsSet: false,
       requestingDrawing: false,
@@ -198,7 +150,6 @@ class Surface extends React.Component {
         const results = res.data.results;
         // this.setState({requestingDrawing : false});
         this.props.fetchDrawing(results);
-        this.props.clearDrawing();
         this.props.selectDrawing(results[0]);
       }).finally(() => {
         this.props.requestComplete();
@@ -210,13 +161,20 @@ class Surface extends React.Component {
   componentDidMount(){
     
     this.setState({
-      dimensionsSet: true
+      dimensionsSet: true,
+      height: this.surface.clientWidth
     });
     
   }
 
   rgbToString(rgb){
     return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, 0.5)`
+  }
+
+  getStyle(){
+    return {
+        height: this.state.height + "px"
+    }
   }
 
   componentDidUpdate(){  
@@ -229,7 +187,7 @@ class Surface extends React.Component {
   render(){
       
         return(
-            <div id="surface" className="top-margin-20" ref={node => this.surface = node}>
+            <div id="surface" className="top-margin-20" style={this.getStyle()} ref={node => this.surface = node}>
             <Stage width={this.getCanvasWidth()} height={this.getCanvasHeight()} 
               onClick={this.handleStageClick}
               onContentMousedown={this.handleMouseDown}
@@ -241,14 +199,6 @@ class Surface extends React.Component {
               }}
               >
               <Provider store={store}>
-                <Layer>
-                {
-                    this.props.selectedDrawing?
-                    <Drawing src={this.props.selectedDrawing} width={this.getCanvasWidth()} height={this.getCanvasHeight()}/>
-                    :null
-
-                }
-                </Layer>
                 <Layer>
 
                   

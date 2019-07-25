@@ -5,6 +5,7 @@ import Controls from './components/controls';
 import Surface from './components/surface';
 import Results from './components/results';
 import Toolset from './components/toolset';
+import Creation from './components/creation';
 
 export default class App extends React.Component {
 
@@ -28,9 +29,12 @@ export default class App extends React.Component {
               <Controls/>
             </div>
 
-            <div className="col-md-8">
+            <div className="col-md-9">
               <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-6">
+                  <Creation/>
+                </div>
+                <div className="col-md-6">
                   <Surface/>
                 </div>
 
@@ -42,7 +46,7 @@ export default class App extends React.Component {
               
             </div>
 
-            <div className="col-md-3">
+            <div className="col-md-2">
               <Toolset/>
             </div>
 

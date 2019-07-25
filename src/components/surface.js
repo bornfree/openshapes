@@ -6,7 +6,7 @@ import CanvasLine from './canvasLine';
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import {drawLine, fetchDrawing, selectDrawing, clearDrawing} from '../redux/actions'
+import {drawLine, fetchDrawing, selectDrawing, clearDrawing, requestComplete} from '../redux/actions'
 
 /*
 Surface
@@ -189,10 +189,7 @@ class Surface extends React.Component {
   handleCreateClick(){
     var inputMapBase64 = this.stageRef.toDataURL();
     var instanceMapBase64 = this.stageRef.toDataURL();
-    this.drawingInProgress = true;
-
-    console.log("calling")
-  
+    
     axios.post(`http://devbox1.vision.cs.cmu.edu:3000/generate`,{
       input_map : inputMapBase64,
       instance_map : inputMapBase64
@@ -200,15 +197,18 @@ class Surface extends React.Component {
       .then(res => {
         const results = res.data.results;
         // this.setState({requestingDrawing : false});
-        this.drawingInProgress = false;
         this.props.fetchDrawing(results);
         this.props.clearDrawing();
         this.props.selectDrawing(results[0]);
-      })
+      }).finally(() => {
+        this.props.requestComplete();
+        this.drawingInProgress = false;
+      });
       
   }
 
   componentDidMount(){
+    
     this.setState({
       dimensionsSet: true
     });
@@ -219,13 +219,13 @@ class Surface extends React.Component {
     return `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, 0.5)`
   }
 
-  componentDidUpdate(){
-    
+  componentDidUpdate(){  
     if(this.props.requestingDrawing && this.drawingInProgress === false){
+      this.drawingInProgress = true;
       this.handleCreateClick();
     }
   }
-  
+
   render(){
       
         return(
@@ -257,7 +257,7 @@ class Surface extends React.Component {
                     item.itemType === "object"?
                     
                       <CanvasImage key={item.id} {...item} /> :
-                      <CanvasLine key={item.id} {...item} />
+                      <CanvasLine  key={item.id} {...item} />
                     
                   )}
 
@@ -299,5 +299,5 @@ function mapStateToProps(state){
 
 export default connect(
   mapStateToProps,
-  {drawLine, fetchDrawing, selectDrawing, clearDrawing}
+  {drawLine, fetchDrawing, selectDrawing, clearDrawing, requestComplete}
 )(Surface)

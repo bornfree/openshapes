@@ -58,7 +58,7 @@ class Objects extends React.Component {
                     <div className="col-md-7" id="object-images">
                         {this.state.currentObjectName? 
                             [0,1,2,3,4,5,6,7,8,9].map((index) => 
-                                <img className="img img-fluid img-thumbnail" src={this.getObjectImagePath(index)} onClick={() => this.handleAddObject(index)} />
+                                <img key={index} className="img img-fluid img-thumbnail" src={this.getObjectImagePath(index)} onClick={() => this.handleAddObject(index)} />
                             )
                             : null}
                     </div>

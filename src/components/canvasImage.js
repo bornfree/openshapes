@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image } from 'react-konva';
+import Konva from 'konva';
+import { Image, Filters } from 'react-konva';
 import { connect } from 'react-redux';
 import { transformObject, moveObject } from '../redux/actions';
 
@@ -20,6 +21,10 @@ class CanvasImage extends React.Component {
       // because "image" property is changed
       this.setState({
         image: image
+      },
+      () => {
+        this.konvaImage.cache();
+        this.konvaImage.getLayer().draw();
       });
     };
   }
@@ -37,6 +42,12 @@ class CanvasImage extends React.Component {
       <Image 
         ref={node => this.konvaImage = node} 
         image={this.state.image}
+        filters={[Konva.Filters.Enhance]}
+        enhance = {Math.random()}
+        red={Math.floor(Math.random() * 10)}
+        green={Math.floor(Math.random() * 10)}
+        blue={Math.floor(Math.random() * 10)}
+        
         onTransformEnd={() => this.handleTransformEnd()} 
         onDragEnd={() =>this.handleDragEnd()} 
         name={this.props.id}

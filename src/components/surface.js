@@ -197,8 +197,9 @@ class Surface extends React.Component {
         const results = res.data.results;
         this.setState({requestingDrawing : false});
         this.props.fetchDrawing(results);
-        this.props.selectDrawing(results[0]);
         this.props.clearDrawing();
+        this.props.selectDrawing(results[0]);
+        
       })
       
   }

@@ -42,11 +42,8 @@ class CanvasImage extends React.Component {
       <Image 
         ref={node => this.konvaImage = node} 
         image={this.state.image}
-        filters={[Konva.Filters.Enhance]}
+        filters={this.props.filters}
         enhance = {Math.random()}
-        red={Math.floor(Math.random() * 10)}
-        green={Math.floor(Math.random() * 10)}
-        blue={Math.floor(Math.random() * 10)}
         
         onTransformEnd={() => this.handleTransformEnd()} 
         onDragEnd={() =>this.handleDragEnd()} 

@@ -49,12 +49,28 @@ code {
 #surface{
   background: white;
   width: 100%;
-  height: 70vh;
   -webkit-box-shadow: 0 0 5px 5px #E6E6E6;
   box-shadow: 0 0 5px 5px #E6E6E6;
   -webkit-background-clip: padding-box;
   -moz-background-clip:    padding; 
   background-clip:         padding-box;
+}
+
+#creation{
+  background: #EEEEEE;
+  width: 100%;
+  -webkit-box-shadow: 0 0 5px 5px #E6E6E6;
+  box-shadow: 0 0 5px 5px #E6E6E6;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip:    padding; 
+  background-clip:         padding-box;
+  display: flex;
+  align-items: center;
+}
+
+#creation img{
+  width: 100%;
+  height: 100%;
 }
 
 #toolset{

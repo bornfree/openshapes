@@ -17,8 +17,8 @@ class Results extends React.Component {
                     :null
                 }
                 <div className="row">
-                {this.props.resultImages.map((i) => 
-                    <div key={i} className="col-md-2">
+                {this.props.resultImages.map((i, index) => 
+                    <div key={index} className="col-md-2">
                         <div className="result">
                             <img src={i} className="img img-fluid" onClick={() => this.props.selectDrawing(i)}></img>
                         </div>

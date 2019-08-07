@@ -56,6 +56,10 @@ code {
   background-clip:         padding-box;
 }
 
+#surface canvas{
+  height: 100%;
+}
+
 #creation{
   background: #EEEEEE;
   width: 100%;

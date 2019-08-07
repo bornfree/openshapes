@@ -32,10 +32,10 @@ export default class App extends React.Component {
             <div className="col-md-9">
               <div className="row">
                 <div className="col-md-6">
-                  <Creation/>
+                  <Surface/>
                 </div>
                 <div className="col-md-6">
-                  <Surface/>
+                  <Creation/>
                 </div>
 
                 <div className="col-md-12">

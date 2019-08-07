@@ -76,7 +76,6 @@ class Surface extends React.Component {
   }
 
   handleMouseMove = e => {
-
     const stage = this.stageRef.getStage();
     const point = stage.getPointerPosition();
     
@@ -85,11 +84,10 @@ class Surface extends React.Component {
         point
       }
     });
-
+    
     if(this.props.disableLineDrawing)
       return
-
-    // no drawing - skipping
+      // no drawing - skipping
     if (!this._drawing) {
       return;
     }
@@ -100,6 +98,8 @@ class Surface extends React.Component {
       point
     }
    });
+
+   
 
   };
 
@@ -132,20 +132,20 @@ class Surface extends React.Component {
   };
 
   getCanvasWidth(){
-    return this.state.dimensionsSet? this.surface.clientWidth : 10;
+    return this.state.dimensionsSet? this.state.height : 10;
   }
 
   getCanvasHeight(){
-    return this.state.dimensionsSet? this.surface.clientHeight : 10;
+    return this.state.dimensionsSet? this.state.height : 10;
   }
 
   handleCreateClick(){
     var inputMapBase64 = this.stageRef.toDataURL();
-    var instanceMapBase64 = this.stageRef.toDataURL();
+    var instanceMapBase64 = this.stageRefClone.toDataURL();
     
     axios.post(`http://devbox1.vision.cs.cmu.edu:3000/generate`,{
       input_map : inputMapBase64,
-      instance_map : inputMapBase64
+      instance_map : instanceMapBase64
     })
       .then(res => {
         const results = res.data.results;
@@ -160,15 +160,11 @@ class Surface extends React.Component {
   }
 
   componentDidMount(){
-    
+
     this.setState({
       dimensionsSet: true,
       height: this.surface.clientWidth
-    },
-    () => {
-      var hiddenLayer = this.layerRef.clone();
-    }
-    );
+    });
     
   }
 
@@ -193,6 +189,7 @@ class Surface extends React.Component {
       
         return(
             <div id="surface" className="top-margin-20" style={this.getStyle()} ref={node => this.surface = node}>
+            
             <Stage width={this.getCanvasWidth()} height={this.getCanvasHeight()} 
               onClick={this.handleStageClick}
               onContentMousedown={this.handleMouseDown}
@@ -204,9 +201,7 @@ class Surface extends React.Component {
               }}
               >
               <Provider store={store}>
-                <Layer visible={true} ref={node => {
-                this.layerRef = node;
-              }}>
+                <Layer>
                   
                   {this.props.items.map((item, i) => 
 
@@ -233,34 +228,31 @@ class Surface extends React.Component {
 
                   <Handler selectedShapeName={this.state.selectedShapeName} />
                 </Layer>
-                <Layer visible={false}>
+                </Provider>
+                
+              </Stage>
+
+            <Stage className="d-none"
+              width={this.getCanvasWidth()} 
+              height={this.getCanvasHeight()} 
+              ref={node => {
+                this.stageRefClone = node;
+              }}>
+                <Provider store={store}>
+                <Layer>
                   {this.props.items.map((item, i) => 
 
                     item.itemType === "object"?
                     
-                      <CanvasImage key={item.id} filters={[Konva.Filters.Enhance]} {...item} /> :
+                      <CanvasImage key={item.id} filters={[Konva.Filters.RGB]} {...item} /> :
                       <CanvasLine  key={item.id} {...item} />
                     
                   )}
 
-                  {
-                    !this.props.disableLineDrawing?
-                    <Circle 
-                      x={this.state.position.point.x} 
-                      y={this.state.position.point.y} 
-                      radius={this.props.brushSize/2} 
-                      fill={this.rgbToString(this.props.brushColor)}
-                      stroke='black'
-                      strokeWidth="1" />
-                    :null
-                  }
-                  
-                  <CanvasLine points={this.state.currentLine} brushSize={this.props.brushSize} brushColor={this.props.brushColor}/>
-
-                  <Handler selectedShapeName={this.state.selectedShapeName} />
                 </Layer>
-              </Provider>
+                </Provider>
             </Stage>
+
             </div>
         );
   }

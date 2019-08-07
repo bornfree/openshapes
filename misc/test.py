@@ -11,7 +11,7 @@ import io
 # from annoy import AnnoyIndex
 import json
 
-with io.open("./src/coco.json") as f:
+with io.open("../src/coco.json") as f:
     coco = json.load(f)
 
 
@@ -39,6 +39,7 @@ def generate():
         input_map = Image.open(BytesIO(base64.b64decode(request.json['input_map'][22:])))
         instance_map = Image.open(BytesIO(base64.b64decode(request.json['instance_map'][22:])))
 
+        instance_map.save("/home/harsha/Desktop/check.png")
         
         # input_map = Image.open("/home/harsha/Pictures/canvas.png")
 

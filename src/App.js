@@ -20,8 +20,7 @@ export default class App extends React.Component {
 
     return (
       <div className="App" id="app">
-        <Navbar/>
-
+        
         <div id="editor" className="container-fluid">
           <div className="row">
 

@@ -143,7 +143,7 @@ class Surface extends React.Component {
     var inputMapBase64 = this.stageRef.toDataURL();
     var instanceMapBase64 = this.stageRefClone.toDataURL();
     
-    axios.post(`http://devbox1.vision.cs.cmu.edu:3000/generate`,{
+    axios.post(`http://openshapes.perception.cs.cmu.edu:3000/generate`,{
       input_map : inputMapBase64,
       instance_map : instanceMapBase64
     })

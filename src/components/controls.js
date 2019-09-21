@@ -32,9 +32,12 @@ class Controls extends React.Component {
                         <p><small>Redo</small></p>
                     </div>
 
-                    <div className="col-md-12 text-center top-margin-20 control-button" onClick={() => this.props.downloadDrawing()} >
-                        <i className="fas fa-download fa-2x"></i>
-                        <p><small>Download</small></p>
+                    <div className="col-md-12 text-center top-margin-20 control-button">
+                        <a href={this.props.selectedDrawing} download>
+                            <i className="fas fa-download fa-2x"></i>
+                            <p><small>Download</small></p>
+                        </a>
+                        
                     </div>
 
                     <div className="col-md-12 text-center top-margin-20 control-button" onClick={() => this.props.clearDrawing()}>
@@ -51,7 +54,8 @@ class Controls extends React.Component {
 
 function mapStateToProps(state){
     return {
-        requestingDrawing: state.ui.requestingDrawing
+        requestingDrawing: state.ui.requestingDrawing,
+        selectedDrawing: state.canvas.present.selectedDrawing
     }
 }
 
